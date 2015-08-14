@@ -6,7 +6,7 @@ mkdir -p  /srv/ouatio/
 chown dspace:dspace /srv/ouatio/
 
 # point tomcat at the dspace web app location
-cp -r /vagrant/etc/Catalina/localhost/ROOT.xml /usr/share/tomcat/conf/Catalina/localhost
+cp -r /vagrant/etc/Catalina/localhost/*.xml /usr/share/tomcat/conf/Catalina/localhost
 
 
 # Get the Ouatio DSpace Code

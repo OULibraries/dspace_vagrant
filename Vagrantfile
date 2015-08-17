@@ -25,6 +25,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/dependencies.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/ouatio-db.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/ouatio-dspace.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/ouatio-drupal.sh", :args => home_dir
 

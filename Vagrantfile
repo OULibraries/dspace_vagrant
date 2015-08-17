@@ -7,6 +7,9 @@
 # you're doing.
 Vagrant.configure(2) do |config|
 
+
+  config.ssh.forward_agent = true
+
   config.vm.box = "vmware-centos71"
   config.vm.hostname = "ouatio.vm.test"
 
@@ -23,10 +26,13 @@ Vagrant.configure(2) do |config|
 
   home_dir = "/home/vagrant"
 
-  config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/dependencies.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/ouatio-db.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/ouatio-dspace.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/ouatio-drupal.sh", :args => home_dir
+ config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
+ config.vm.provision :shell, :path => "./scripts/dependencies.sh", :args => home_dir
+ config.vm.provision :shell, :path => "./scripts/ouatio-db.sh", :args => home_dir
+ # Interaction with GitHub needs to be done as vagrant user because
+ # ssh agent forwarding works if we do it that way 
+ config.vm.provision :shell, :path => "./scripts/ouatio-github.sh", :args => home_dir, :privileged => FALSE
+ config.vm.provision :shell, :path => "./scripts/ouatio-dspace.sh", :args => home_dir
+ config.vm.provision :shell, :path => "./scripts/ouatio-drupal.sh", :args => home_dir
 
 end

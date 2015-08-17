@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Update the base system
-# All of this stuff should get moved to the base box eventually
+# Most of this stuff should get moved to the base box eventually
 
 
 # Get detarpm first, so we can download less stuff
@@ -11,14 +11,15 @@ yum install -y deltarpm
 yum -y update
 
 
-#VM stuff
+# Install an ntpd that works well with vms 
 yum install -y chrony
 
-#Ops stuff
+# Install various ops stuff
 yum install -y epel-release nload htop iostat psmisc iotop yum-cron policycoreutils-python
 
-#Dev stuff
+# Install various dev tools
 yum install -y git wget curl tree emacs-nox vim ack tmux screen lynx links
 
 
-
+# Add github ssh fingerprints to vagrant ssh known_hosts
+ssh-keyscan github.com | sudo -u vagrant tee -a  /home/vagrant/.ssh/known_hosts

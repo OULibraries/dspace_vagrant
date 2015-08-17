@@ -1,12 +1,6 @@
 #!/bin/bash
 
 
-# Create the dspace account
-groupadd dspace
-useradd -g dspace dspace
-
-
-
 
 # Java, Tomcat and Related Tools
 
@@ -28,13 +22,12 @@ yum install -y java-1.8.0-openjdk maven ant
 # ln -s /opt/apache/apache-maven-3.3.3/bin/mvn /opt/bin/mvn
 
 
-
-
-
-
 # Install the system tomcat 
 yum install -y tomcat tomcat-webapps tomcat-admin-webapps 
 systemctl enable tomcat.service
 systemctl start tomcat
+
+
+
 
 

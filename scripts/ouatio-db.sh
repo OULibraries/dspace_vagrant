@@ -13,12 +13,12 @@ systemctl enable postgresql.service
 systemctl start  postgresql.service
 
 # Create the dspace db user and database
-cat <<EOF | sudo -u postgres psql
+cat <<EOF | sudo -i -u postgres psql
 -- Create the database user:
 CREATE USER dspace WITH PASSWORD 'dspace';
 EOF
 
-sudo -u postgres createdb --username=postgres --owner=dspace --encoding=UNICODE dspace
+sudo -i -u postgres createdb --username=postgres --owner=dspace --encoding=UNICODE dspace
 
 systemctl restart  postgresql.service
 

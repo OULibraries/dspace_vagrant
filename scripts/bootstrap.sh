@@ -14,6 +14,9 @@ yum -y update
 # Install an ntpd that works well with vms 
 yum install -y chrony
 
+# Set Oklahoma time
+timedatectl set-timezone America/Chicago
+
 # Install various ops stuff
 yum install -y epel-release nload htop iostat psmisc iotop yum-cron policycoreutils-python
 

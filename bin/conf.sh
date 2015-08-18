@@ -1,10 +1,10 @@
+MAVEN_PROFILE=build
 
-
-MAVEN_PROFILE=vagrant
-
-MAVEN=${HOME}/apache-maven-3.2.5/bin/mvn
-ANT=${HOME}/apache-ant-1.9.4/bin/ant
-TOMCAT=${HOME}/apache-tomcat-7.0.61
+MAVEN=mvn
+ANT=ant
+TOMCAT=/usr/share/tomcat
+DSPACE_SRC=/home/vagrant/ouatio_dspace
+DSPACE_RUN=/srv/ouatio/dspace
 
 export ANT_OPTS="-Xms128m -Xmx800m"
 

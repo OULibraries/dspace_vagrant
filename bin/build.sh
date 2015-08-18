@@ -1,10 +1,10 @@
 ## Configuration
 
-. ${HOME}/bin/conf.sh
+. /vagrant/bin/conf.sh
 
 
-cd $HOME/src
-$MAVEN  -Denv=$MAVEN_PROFILE -Dskiptests package
+cd ${DSPACE_SRC}
+$MAVEN -Dmaven.repo.local=/vagrant/m2 -Dmirage2.on=true -Denv=$MAVEN_PROFILE -Dskiptests package
 OUT=$?
 if [ $OUT -eq 0 ];then
    echo "Maven Update successful"
@@ -12,11 +12,11 @@ else
    exit $OUT
 fi
 
-cd dspace/target/dspace-*-build
-if [ -d $HOME/dspace ];then
-        $ANT  -Doverwrite=true update clean_backups
+cd ${DSPACE_SRC}/dspace/target/dspace-installer
+if [ -d ${DSPACE_RUN} ];then
+        sudo $ANT  -Doverwrite=true update clean_backups
 else
-        $ANT fresh_install
+        sudo $ANT fresh_install
 fi
 OUT=$?
 if [ $OUT -eq 0 ];then
@@ -24,3 +24,6 @@ if [ $OUT -eq 0 ];then
 else
    exit $OUT
 fi
+
+
+sudo chown -R tomcat:tomcat ${DSPACE_RUN}/assetstore/ ${DSPACE_RUN}/solr/

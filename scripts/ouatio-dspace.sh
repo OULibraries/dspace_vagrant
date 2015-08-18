@@ -15,10 +15,12 @@ cd /home/vagrant/ouatio_dspace/dspace/target/dspace-installer
 ant fresh_install
 
 #tomcat needs to own folders it will be writing to
-sudo chown -R tomcat:tomcat assetstore/ solr/
+chown -R tomcat:tomcat /srv/ouatio/dspace/assetstore/ /srv/ouatio/dspace/solr/
+
 
 # restart tomcat
 systemctl restart tomcat
+
 
 
 

@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
 <Context
-    docBase="[dspace]/webapps/oai"
+    docBase="/srv/ouatio/dspace/webapps/oai"
     reloadable="true"
     cachingAllowed="false"/>

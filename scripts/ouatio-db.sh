@@ -25,7 +25,10 @@ systemctl restart  postgresql.service
 
 #Drupal Database Installation and Setup
 
+sudo yum install mariadb-server mariadb
 
+sudo systemctl enable mariadb.service
+sudo systemctl start mariadb
 
 
 

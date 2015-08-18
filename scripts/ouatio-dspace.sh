@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Java, Tomcat and Related Tools
+
+yum install -y java-1.8.0-openjdk maven ant
+yum install -y tomcat tomcat-webapps tomcat-admin-webapps 
+
+systemctl enable tomcat.service
+systemctl start tomcat
+
 # make the dspace web app location 
 mkdir -p  /srv/ouatio/
 
@@ -14,9 +22,8 @@ sudo -u vagrant  mvn -Dmaven.repo.local=/vagrant/m2 package
 cd /home/vagrant/ouatio_dspace/dspace/target/dspace-installer
 ant fresh_install
 
-#tomcat needs to own folders it will be writing to
-chown -R tomcat:tomcat /srv/ouatio/dspace/assetstore/ /srv/ouatio/dspace/solr/
-
+# tomcat needs to write to some folders
+chown -R tomcat:tomcat /srv/ouatio/dspace/assetstore/ /srv/ouatio/dspace/solr/ /srv/ouatio/dspace/log
 
 # restart tomcat
 systemctl restart tomcat

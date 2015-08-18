@@ -23,12 +23,12 @@ sudo -i -u postgres createdb --username=postgres --owner=dspace --encoding=UNICO
 systemctl restart  postgresql.service
 
 
-#Drupal Database Installation and Setup
+# Drupal Database Installation and Setup
 
-sudo yum install mariadb-server mariadb
+# sudo yum install mariadb-server mariadb
 
-sudo systemctl enable mariadb.service
-sudo systemctl start mariadb
+# sudo systemctl enable mariadb.service
+# sudo systemctl start mariadb
 
 
 

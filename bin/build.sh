@@ -2,7 +2,9 @@
 
 . /vagrant/bin/conf.sh
 
-
+#
+# build dspace as an unprivleged user
+#
 cd ${DSPACE_SRC}
 $MAVEN -Dmaven.repo.local=/vagrant/m2 -Dmirage2.on=true -Denv=$MAVEN_PROFILE -Dskiptests package
 OUT=$?
@@ -12,6 +14,9 @@ else
    exit $OUT
 fi
 
+#
+# Install to srv as root
+# 
 cd ${DSPACE_SRC}/dspace/target/dspace-installer
 if [ -d ${DSPACE_RUN} ];then
         sudo $ANT  -Doverwrite=true update clean_backups
@@ -25,5 +30,5 @@ else
    exit $OUT
 fi
 
-
+# make sure tomcat can open files that it needs to use
 sudo chown -R tomcat:tomcat ${DSPACE_RUN}/assetstore/ ${DSPACE_RUN}/solr/

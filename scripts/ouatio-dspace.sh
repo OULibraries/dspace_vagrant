@@ -16,7 +16,7 @@ cp -r /vagrant/etc/Catalina/localhost/*.xml /usr/share/tomcat/conf/Catalina/loca
 
 # build the dspace install as the vagrant user
 cd /home/vagrant/ouatio_dspace 
-sudo -u vagrant  mvn -Dmaven.repo.local=/vagrant/m2 package
+sudo -u vagrant  /vagrant/bin/build.sh
 
 # install the files as root
 cd /home/vagrant/ouatio_dspace/dspace/target/dspace-installer

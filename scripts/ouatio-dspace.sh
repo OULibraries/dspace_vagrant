@@ -15,12 +15,8 @@ mkdir -p  /srv/ouatio/
 cp -r /vagrant/etc/Catalina/localhost/*.xml /usr/share/tomcat/conf/Catalina/localhost
 
 # build the dspace install as the vagrant user
-cd /home/vagrant/ouatio_dspace 
-sudo -u vagrant  mvn -Dmaven.repo.local=/vagrant/m2 package
-
 # install the files as root
-cd /home/vagrant/ouatio_dspace/dspace/target/dspace-installer
-ant fresh_install
+sudo -u vagrant  /vagrant/bin/build.sh
 
 # tomcat needs to write to some folders
 chown -R tomcat:tomcat /srv/ouatio/dspace/assetstore/ /srv/ouatio/dspace/solr/ /srv/ouatio/dspace/log

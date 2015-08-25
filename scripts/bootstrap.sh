@@ -10,10 +10,6 @@ yum install -y deltarpm
 # Get the latest stuff
 yum -y update
 
-
-# Install an ntpd that works well with vms 
-yum install -y chrony
-
 # Set Oklahoma time
 timedatectl set-timezone America/Chicago
 
@@ -25,12 +21,3 @@ yum install -y git wget curl tree emacs-nox vim ack tmux screen lynx links
 
 # Add github ssh fingerprints to vagrant ssh known_hosts
 ssh-keyscan github.com | sudo -u vagrant tee -a  /home/vagrant/.ssh/known_hosts
-
-
-# yum install -y postfix
-
-# cat <<EOF >> /etc/postfix/main.cf
-# myorigin = ou.edu
-# relayhost = exsmtp.zero.ou.edu
-# inet_interfaces = loopback-only
-# EOF

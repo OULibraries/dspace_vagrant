@@ -25,6 +25,7 @@ cd /vagrant/ouatio_dspace/dspace/target/dspace-installer
 ant fresh_install
 
 # tomcat needs to write to some folders
+mkdir -p /srv/ouatio/dspace/assetstore /srv/ouatio/dspace/solr /srv/ouatio/dspace/log
 chown -R tomcat:tomcat /srv/ouatio/dspace/assetstore/ /srv/ouatio/dspace/solr/ /srv/ouatio/dspace/log
 
 # restart tomcat

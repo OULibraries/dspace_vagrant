@@ -1,6 +1,6 @@
 ## Configuration
 
-. /vagrant/bin/conf.sh
+. /vagrant/etc/conf.sh
 
 
 cd ${DSPACE_SRC}/dspace/target/dspace-installer

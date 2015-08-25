@@ -1,6 +1,6 @@
 ## Configuration
 
-. /vagrant/bin/conf.sh
+. /vagrant/etc/conf.sh
 
 #
 # build dspace as an unprivleged user

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. /vagrant/etc/conf.sh
+
 # Java, Tomcat and Related Tools
 
 yum install -y java-1.8.0-openjdk maven ant
@@ -15,11 +17,11 @@ mkdir -p  /srv/ouatio/
 cp -r /vagrant/etc/Catalina/localhost/*.xml /usr/share/tomcat/conf/Catalina/localhost
 
 # build the dspace install as the vagrant user
-cd /home/vagrant/ouatio_dspace 
+cd /vagrant/ouatio_dspace 
 sudo -u vagrant  /vagrant/bin/build.sh
 
 # install the files as root
-cd /home/vagrant/ouatio_dspace/dspace/target/dspace-installer
+cd /vagrant/ouatio_dspace/dspace/target/dspace-installer
 ant fresh_install
 
 # tomcat needs to write to some folders

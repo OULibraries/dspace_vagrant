@@ -14,6 +14,6 @@ curl -o /etc/profile.d/prompt.sh https://raw.githubusercontent.com/OULibraries/l
 
 # cat <<EOF >> /etc/postfix/main.cf
 # myorigin = ou.edu
-# relayhost = exsmtp.zero.ou.edu
+# relayhost = asmtp.ou.edu
 # inet_interfaces = loopback-only
 # EOF

@@ -1,3 +1,9 @@
+
+
+
+DSPACE_GIT="git@github.com:OULibraries/ouatio_dspace"
+
+
 MAVEN_PROFILE=build
 
 MAVEN=mvn

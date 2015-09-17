@@ -26,13 +26,14 @@ Vagrant.configure(2) do |config|
 
   home_dir = "/home/vagrant"
 
- config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
- config.vm.provision :shell, :path => "./scripts/ouatio-db.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/bootstrap-vagrant.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/dspace-db-vagrant.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/dspace-db.sh", :args => home_dir
  # Interaction with GitHub needs to be done as vagrant user because
  # ssh agent forwarding works if we do it that way 
- config.vm.provision :shell, :path => "./scripts/ouatio-github.sh", :args => home_dir, :privileged => FALSE
- config.vm.provision :shell, :path => "./scripts/ouatio-mirage2.sh", :args => home_dir, :privileged => FALSE
- config.vm.provision :shell, :path => "./scripts/ouatio-dspace.sh", :args => home_dir
- config.vm.provision :shell, :path => "./scripts/ouatio-drupal.sh", :args => home_dir
+ config.vm.provision :shell, :path => "./scripts/dspace-github.sh", :args => home_dir, :privileged => FALSE
+ config.vm.provision :shell, :path => "./scripts/dspace-mirage2.sh", :args => home_dir, :privileged => FALSE
+ config.vm.provision :shell, :path => "./scripts/dspace.sh", :args => home_dir
 
 end

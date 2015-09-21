@@ -1,9 +1,4 @@
-
-
-
-
-
-# Java Environemnt Setup
+# Java Environment 
 MAVEN_PROFILE=build
 MAVEN=mvn
 ANT=ant
@@ -11,7 +6,7 @@ TOMCAT=/usr/share/tomcat
 export ANT_OPTS="-Xms128m -Xmx800m"
 
 
-# DSpace Path stuff
+# DSpace Paths
 DSPACE_GIT="git@github.com:OULibraries/ouatio_dspace"
 DSPACE_SRC=/vagrant/ouatio_dspace
 DSPACE_RUN=/srv/ouatio/dspace

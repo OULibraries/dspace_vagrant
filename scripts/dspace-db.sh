@@ -1,34 +1,20 @@
 #!/bin/bash
 
-
-
-# DSpace Database Installation and Setup
-yum install -y postgresql-server
-postgresql-setup initdb;
-
-
-sed -i.bak '/host    all             all             127.0.0.1\/32            ident/ i\host    dspace          dspace          127.0.0.1/32            md5' /var/lib/pgsql/data/pg_hba.conf
-
-systemctl enable postgresql.service
-systemctl start  postgresql.service
+. /vagrant/etc/conf.sh
 
 # Create the dspace db user and database
-cat <<EOF | sudo -i -u postgres psql
+# requires interactive run to specify passwords
+
+# createuser --username=$DB_ADMIN --host=$DB_HOST --pwprompt $DB_NAME
+
+
+cat <<EOF | su - postgres -c psql
 -- Create the database user:
-CREATE USER dspace WITH PASSWORD 'dspace';
+CREATE USER $DB_NAME WITH PASSWORD '$DB_PASS';
 EOF
 
-sudo -i -u postgres createdb --username=postgres --owner=dspace --encoding=UNICODE dspace
-
-systemctl restart  postgresql.service
-
-
-# Drupal Database Installation and Setup
-
-# sudo yum install mariadb-server mariadb
-
-# sudo systemctl enable mariadb.service
-# sudo systemctl start mariadb
 
 
 
+
+createdb   --username=$DB_ADMIN --host=$DB_HOST --owner=$DB_NAME --encoding=UNICODE $DB_NAME

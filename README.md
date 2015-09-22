@@ -12,7 +12,7 @@ Requires:
 This environment can work for either OUatio or SHAREOK development. To configure for SHAREOK:
 
 * Clone the repo to an appropriate location: `git clone https://github.com/OULibraries/dspace_vagrant shareok_vagrant`
-* in `.../etc` do `ln -s ./shareok.conf.sh ./conf.sh'
+* in `.../etc` do `ln -s ./shareok.conf.sh ./conf.sh`
 * in `.../etc/Catalina` do `ln -s ./shareok ./localhost`
 * build the vm with `vagrant up --provider=vmware_fusion`
 * run `sudo /srv/shareok/dspace create-administrator` to create a local admin user

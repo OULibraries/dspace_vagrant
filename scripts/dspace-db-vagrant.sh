@@ -5,31 +5,23 @@
 
 
 
-# install PostgreSQL (client+server)
-yum install -y postgresql-server
-postgresql-setup initdb;
+# # install PostgreSQL (client+server)
+# yum install -y postgresql-server
+# postgresql-setup initdb;
 
-# configure authentication 
-cp /vagrant/etc/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf
-chown postgres:postgres /var/lib/pgsql/data/pg_hba.conf
+# # configure authentication 
+# cp /vagrant/etc/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf
+# chown postgres:postgres /var/lib/pgsql/data/pg_hba.conf
 
-# start up as a service
-systemctl enable postgresql.service
-systemctl start  postgresql.service
+# # start up as a service
+# systemctl enable postgresql.service
+# systemctl start  postgresql.service
 
 # DB admin user to match amazon
 cat <<EOF | su - postgres -c psql
 CREATE USER libacct WITH PASSWORD 'libacct' SUPERUSER;
-EOF
-
-#db user
-cat <<EOF | su - postgres -c psql
 CREATE USER $DB_NAME WITH PASSWORD '$DB_PASS';
-EOF
-
-
-cat <<EOF | su - postgres -c psql
-CREATE DATABASE $DB_NAME WITH OWNER=$DB_NAME ENCODING=UNICODE
+CREATE DATABASE $DB_NAME WITH OWNER=$DB_NAME ENCODING='UNICODE'
 EOF
 
 

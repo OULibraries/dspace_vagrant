@@ -1,5 +1,5 @@
 # Java Environment 
-MAVEN_PROFILE=build
+MAVEN_PROFILE=vagrant
 MAVEN=mvn
 ANT=ant
 TOMCAT=/usr/share/tomcat

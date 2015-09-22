@@ -5,7 +5,9 @@ Requires:
 * a CentOS 7 vagrant base box for VMWare. There's a good setup for making one [here](https://github.com/geerlingguy/packer-centos-7/).
 
 
-## Configuration
+
+
+## Configure and Install
 
 This environment can work for either OUatio or SHAREOK development. To configure for SHAREOK:
 
@@ -17,9 +19,17 @@ This environment can work for either OUatio or SHAREOK development. To configure
 
 There is an unresolved issue in DSpace 5.x that can cause DSpace to be unable to create an admin user when first installed. See [the ticket](https://jira.duraspace.org/browse/DS-2408) for the issue for more inforamtion. If you run in to this problem, you can use `dspace database clean` to erase the DSpace database, and then re-run `dspace create-administrator`, which will cause the database to be reinitialized correctly. 
 
+After sucessfully building a VM, you will find:
+
+* DSpace will be installed and running from a project folder under /srv
+* the DSpace src will be located in the /vagrant folder (shared from the host computer)
+
 
 
 To configure for OUatio, substitute the OUatio configuration files. 
+
+
+
 
 
 

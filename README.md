@@ -1,4 +1,4 @@
-# Development Environment for Ouatio
+# OU Repositories Development Environment for DSpace
 
 Requires:
 * key-based access to the private ouatio_vagrant git repository. (Which is just a copy of the DSpace 5.3 release that we configured and checked in to GitHub.)

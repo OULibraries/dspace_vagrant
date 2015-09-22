@@ -1,6 +1,6 @@
 # Developer Workflow
 
-## Simplified Ouatio DSpace Git Workflow
+## Simplified DSpace Git Workflow
 
 New code should be created in feature branches derived from the master
 branch and merged in to the master branch in logical units.

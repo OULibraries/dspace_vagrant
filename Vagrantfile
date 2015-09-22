@@ -33,6 +33,7 @@ Vagrant.configure(2) do |config|
  # ssh agent forwarding works if we do it that way 
  config.vm.provision :shell, :path => "./scripts/dspace-github.sh", :args => home_dir, :privileged => FALSE
  config.vm.provision :shell, :path => "./scripts/dspace-mirage2.sh", :args => home_dir, :privileged => FALSE
+ config.vm.provision :shell, :path => "./scripts/dspace-java.sh", :args => home_dir
  config.vm.provision :shell, :path => "./scripts/dspace.sh", :args => home_dir
 
 end

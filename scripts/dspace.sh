@@ -19,7 +19,7 @@ ant fresh_install
 
 # tomcat needs to write to some folders
 mkdir -p "$DSPACE_RUN"/assetstore "$DSPACE_RUN"/solr "$DSPACE_RUN"/log
-chown -R tomcat:tomcat "$DSPACE_RUN"/assetstore/ "$DSPACE_RUN"/solr/ "$DSPACE_RUN"/log
+chown -R tomcat:tomcat "$DSPACE_RUN"
 
 # restart tomcat
 systemctl restart tomcat

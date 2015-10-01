@@ -19,7 +19,7 @@ systemctl start  postgresql.service
 
 # DB admin user to match amazon
 cat <<EOF | su - postgres -c psql
-CREATE USER libacct WITH PASSWORD 'libacct' SUPERUSER;
+CREATE USER $DB_ADMIN WITH PASSWORD $DB_ADMIN_PASS SUPERUSER;
 CREATE USER $DB_NAME WITH PASSWORD '$DB_PASS';
 CREATE DATABASE $DB_NAME WITH OWNER=$DB_NAME ENCODING='UNICODE'
 EOF

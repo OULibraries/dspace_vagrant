@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
   config.ssh.forward_agent = true
 
   config.vm.box = "vmware-centos71"
-  config.vm.hostname = "dspace.vm.test"
+  config.vm.hostname = "shareok3x.vm.test"
 
 
   # Use NFS 
@@ -29,11 +29,13 @@ Vagrant.configure(2) do |config|
   config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/bootstrap-vagrant.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/dspace-db-vagrant.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/shareok-3x.sh", :args => home_dir
  # Interaction with GitHub needs to be done as vagrant user because
  # ssh agent forwarding works if we do it that way 
  config.vm.provision :shell, :path => "./scripts/dspace-github.sh", :args => home_dir, :privileged => FALSE
- config.vm.provision :shell, :path => "./scripts/dspace-mirage2.sh", :args => home_dir, :privileged => FALSE
+# config.vm.provision :shell, :path => "./scripts/dspace-mirage2.sh", :args => home_dir, :privileged => FALSE
  config.vm.provision :shell, :path => "./scripts/dspace-java.sh", :args => home_dir
  config.vm.provision :shell, :path => "./scripts/dspace.sh", :args => home_dir
+ config.vm.provision :shell, :path => "./scripts/shareok-3x-db.sh", :args => home_dir
 
 end

@@ -2,11 +2,10 @@
 # Load a copy of the SHAREOK db and then upgrade it 
 #
 . /vagrant/etc/conf.sh
-SHAREOK_EXPORT=/vagrant/downloads/shareokprod-20150922-dump.sql
 
 # Remove existing DB and install fresh export
 $DSPACE_RUN/bin/dspace database clean
-psql -U $DB_NAME -h $DB_HOST $DB_NAME < $SHAREOK_EXPORT
+psql -U $DB_NAME -h $DB_HOST $DB_NAME < $DB_EXPORT
 
 # Upgrade Database
 $DSPACE_RUN/bin/dspace database migrate

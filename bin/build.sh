@@ -31,4 +31,4 @@ else
 fi
 
 # make sure tomcat can open files that it needs to use
-sudo chown -R tomcat:tomcat ${DSPACE_RUN}/assetstore/ ${DSPACE_RUN}/solr/
+sudo chown -R tomcat:tomcat ${DSPACE_RUN} 

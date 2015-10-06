@@ -11,4 +11,8 @@ mkdir -p /vagrant/downloads
 # scp -F shareok-prod:/srv/migrate/* /vagrant/downloads
 
 sudo -u vagrant tar -xovf /vagrant/downloads/dotstuff.tar  -C /home/vagrant
-mv /home/vagrant/.m2 /vagrant/m2
+rsync -rv  /home/vagrant/.m2/  /vagrant/m2
+
+
+
+

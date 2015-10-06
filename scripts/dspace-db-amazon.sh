@@ -1,6 +1,6 @@
 #!/bin/bash
 . /vagrant/etc/conf.sh
-
+export PGPASSWORD=$DB_ADMIN_PASS
 
 # DSpace Client-Only Installation and Setup
 yum install http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm

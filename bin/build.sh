@@ -1,3 +1,4 @@
+#!/bin/bash
 ## Configuration
 
 . /vagrant/etc/conf.sh

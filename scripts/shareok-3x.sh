@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #
 # Load a copy of the SHAREOK db and then upgrade it 
 #

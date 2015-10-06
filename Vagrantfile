@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
 
   config.ssh.forward_agent = true
 
-  config.vm.box = "ansible4devopsch2"
+  config.vm.box = "geerlingguy/centos7"
   config.vm.hostname = "shareok3x.vm.test"
   config.vm.network "private_network", type: "dhcp"
 

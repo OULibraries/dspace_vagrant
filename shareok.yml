@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  sudo: yes
   tasks:
 #  - name: Ensure NTP (for time synchronization) is installed.
 #    yum: name=ntp state=installed
@@ -8,24 +7,32 @@
 #    service: name=ntpd state=started enabled=yes
 #
    - name: setting script to be executable
+     sudo: yes
      file: path=/vagrant/scripts state=directory mode=0775 recurse=yes
    - name: installing base packages
+     sudo: yes
      command: /vagrant/scripts/bootstrap.sh
    - name: installing vagrant-friendly packages
+     sudo: yes
      command: /vagrant/scripts/bootstrap-vagrant.sh
    - name: installing db
+     sudo: yes
      command: /vagrant/scripts/dspace-db-vagrant.sh
    - name: setup netrc stuff for atmire checkout and kludge around bad atmire perms
+     sudo: yes
      command: /vagrant/scripts/shareok-3x.sh
 # Interaction with GitHub needs to be done as vagrant user because
 # ssh agent forwarding works if we do it that way    
    - name: git checkout
      command: /vagrant/scripts/dspace-github.sh
-   - name: install mirage2 dspace theme
-     command: /vagrant/scripts/dspace-mirage2.sh
+#   - name: install mirage2 dspace theme
+#     command: /vagrant/scripts/dspace-mirage2.sh
    - name: install openjdk tomcat maven and ant
+     sudo: yes
      command: /vagrant/scripts/dspace-java.sh
    - name: install dspace
+     sudo: yes
      command: /vagrant/scripts/dspace.sh
    - name: db cleanup
+     sudo: yes
      command: /vagrant/scripts/shareok-3x-db.sh

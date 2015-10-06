@@ -17,7 +17,11 @@ fi
 #
 # Install to srv as root
 # 
-cd ${DSPACE_SRC}/dspace/target/dspace-installer
+#cd ${DSPACE_SRC}/dspace/target/dspace-installer
+cd ${DSPACE_SRC}/dspace/target/dspace-*-build
+
+
+
 if [ -d ${DSPACE_RUN} ];then
         sudo $ANT  -Doverwrite=true update clean_backups
 else

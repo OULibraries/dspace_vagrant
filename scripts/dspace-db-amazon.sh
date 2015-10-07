@@ -6,6 +6,6 @@
 yum install http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm
 yum install -y postgresql94 postgresql94-jdbc
 
-# DB admin account not needed here
+# DB admin account already exists, so don't create it
 
 

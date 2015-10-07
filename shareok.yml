@@ -1,4 +1,19 @@
 ---
+- hosts: localhost
+  vars:
+    sshcfg: '/etc/ansible/ssh.cfg'
+    server: 'lib.s2.shareok.prod'
+    src: '/srv/migrate/'
+    dest: 'downloads/'
+  tasks:
+  - name: Ensure symlink to shareok-specific config script exists.
+    file: src=../etc/shareok.conf.sh dest=etc/conf.sh state=link force=yes
+  - name: Ensure symlink to shareok-specific Catalina exists.
+    file: src=../etc/Catalina/shareok dest=etc/Catalina/localhost state=link force=yes
+  - name: Ensure downloads folder exists
+    file: "path=downloads state=directory"
+  - name: Sync necessary files from production.
+    command: rsync -e 'ssh -F {{ sshcfg }}' -rltozD --min-size=1 {{ server }}:{{ src }} {{ dest }}
 - hosts: all
   tasks:
 #  - name: Ensure NTP (for time synchronization) is installed.
@@ -6,33 +21,91 @@
 #  - name: Ensure NTP is running.
 #    service: name=ntpd state=started enabled=yes
 #
-   - name: setting script to be executable
-     sudo: yes
-     file: path=/vagrant/scripts state=directory mode=0775 recurse=yes
-   - name: installing base packages
-     sudo: yes
-     command: /vagrant/scripts/bootstrap.sh
-   - name: installing vagrant-friendly packages
-     sudo: yes
-     command: /vagrant/scripts/bootstrap-vagrant.sh
-   - name: installing db
-     sudo: yes
-     command: /vagrant/scripts/dspace-db-vagrant.sh
-   - name: setup netrc stuff for atmire checkout and kludge around bad atmire perms
-     sudo: yes
-     command: /vagrant/scripts/shareok-3x.sh
+
+  - name: Ensure scripts are executable.
+    sudo: yes
+    file: path=/vagrant/scripts state=directory mode=0775 recurse=yes
+  - name: Ensure base packages are installed.
+    sudo: yes
+    yum: name={{ item }} state=latest
+    with_items:
+    - deltarpm
+    - epel-release
+    - nload
+    - htop
+    - sysstat
+    - psmisc
+    - iotop
+    - yum-cron
+    - policycoreutils-python
+    - git
+    - wget
+    - curl
+    - tree
+    - emacs-nox
+    - vim
+    - ack
+    - tmux
+    - screen
+  - name: Set Oklahoma time.
+    sudo: yes
+    command: timedatectl set-timezone America/Chicago
+  - name: Add github ssh fingerprints to vagrant ssh known_hosts.
+    shell: >
+      ssh-keyscan github.com | tee -a /home/vagrant/.ssh/known_hosts
+  - name: Ensure packages that work well with local VMs.
+    sudo: yes
+    yum: name=chrony state=latest
+  - name: Ensure PostgreSQL is installed.
+    sudo: yes
+    yum: name=postgresql-server state=installed
+  - name: Run PostgreSQL initialization.
+    sudo: yes
+    command: postgresql-setup initdb
+    register: postgres_setup_result
+    ignore_errors: True
+  - name: Fail the play if PostgreSQL exited with a code greater than 1 (Warning)
+    fail: msg="Failed to initialize PostgreSQL."
+    when: "postgres_setup_result.rc > 1"
+  - name: Ensure PostgreSQL authentication config.
+    sudo: yes
+    copy:
+      ## Note that the src is on the host machine.
+      src: "etc/pg_hba.conf"
+      dest: "/var/lib/pgsql/data/pg_hba.conf"
+      owner: postgres
+      group: postgres
+  - name: Ensure PostgreSQL is running.
+    sudo: yes
+    service: name=postgresql state=started enabled=yes
+  - name: Create PostgreSQL admin user and DSpace DB.
+    sudo: yes
+    command: /vagrant/scripts/dspace-db-vagrant.sh
+  - name: setup netrc stuff for atmire checkout and kludge around bad atmire perms
+    sudo: yes
+    command: /vagrant/scripts/shareok-3x.sh
 # Interaction with GitHub needs to be done as vagrant user because
 # ssh agent forwarding works if we do it that way    
-   - name: git checkout
-     command: /vagrant/scripts/dspace-github.sh
+  - name: git checkout
+    command: /vagrant/scripts/dspace-github.sh
 #   - name: install mirage2 dspace theme
 #     command: /vagrant/scripts/dspace-mirage2.sh
-   - name: install openjdk tomcat maven and ant
-     sudo: yes
-     command: /vagrant/scripts/dspace-java.sh
-   - name: install dspace
-     sudo: yes
-     command: /vagrant/scripts/dspace.sh
-   - name: db cleanup
-     sudo: yes
-     command: /vagrant/scripts/shareok-3x-db.sh
+  - name: Ensure DSpace dependency packages are installed.
+    sudo: yes
+    yum: name={{ item }} state=latest
+    with_items:
+    - java-1.8.0-openjdk
+    - maven
+    - ant
+    - tomcat
+    - tomcat-webapps
+    - tomcat-admin-webapps
+  - name: Ensure Tomcat is running.
+    sudo: yes
+    service: name=tomcat state=started enabled=yes
+  - name: install dspace
+    sudo: yes
+    command: /vagrant/scripts/dspace.sh
+  - name: db cleanup
+    sudo: yes
+    command: /vagrant/scripts/shareok-3x-db.sh

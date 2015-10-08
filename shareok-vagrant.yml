@@ -8,5 +8,8 @@
   tasks:
   - include: fetch.yml
 - hosts: all
+  sudo: yes
   tasks:
   - include: shareok.yml
+  - name: Ensure packages that work well with local VMs are installed.
+    yum: name=chrony state=latest

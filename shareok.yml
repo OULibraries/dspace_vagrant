@@ -1,15 +1,16 @@
 ---
+  - name: get DSpace Vagrant resources
+    git: repo=https://github.com/OULibraries/dspace_vagrant.git
+      dest=/vagrant/
+      branch=atmire-3x
+      bare=yes
   - name: Ensure scripts are executable.
-    sudo: yes
     file: path=/vagrant/scripts state=directory mode=0775 recurse=yes
   - name: Ensure symlink to shareok-specific config script exists.
-    sudo: yes
     file: src=/vagrant/etc/shareok.conf.sh dest=/vagrant/etc/conf.sh state=link force=yes
   - name: Ensure symlink to shareok-specific Catalina exists.
-    sudo: yes
     file: src=/vagrant/etc/Catalina/shareok dest=/vagrant/etc/Catalina/localhost state=link force=yes
   - name: Ensure base packages are installed.
-    sudo: yes
     yum: name={{ item }} state=latest
     with_items:
     - deltarpm
@@ -31,19 +32,16 @@
     - tmux
     - screen
   - name: Set Oklahoma time.
-    sudo: yes
     command: timedatectl set-timezone America/Chicago
+  - name: Ensure vagrant user has the .ssh directory
+    sudo_user: vagrant
+    file: path=/home/vagrant/.ssh state=directory mode=0700 owner=vagrant group=vagrant
   - name: Add github ssh fingerprints to vagrant ssh known_hosts.
     shell: >
       ssh-keyscan github.com | tee -a /home/vagrant/.ssh/known_hosts
-  - name: Ensure packages that work well with local VMs.
-    sudo: yes
-    yum: name=chrony state=latest
   - name: Ensure PostgreSQL is installed.
-    sudo: yes
     yum: name=postgresql-server state=installed
   - name: Run PostgreSQL initialization.
-    sudo: yes
     command: postgresql-setup initdb
     register: postgres_setup_result
     ignore_errors: True
@@ -51,7 +49,6 @@
     fail: msg="Failed to initialize PostgreSQL."
     when: "postgres_setup_result.rc > 1"
   - name: Ensure PostgreSQL authentication config.
-    sudo: yes
     copy:
       ## Note that the src is on the host machine.
       src: "etc/pg_hba.conf"
@@ -59,25 +56,21 @@
       owner: postgres
       group: postgres
   - name: Ensure PostgreSQL is running.
-    sudo: yes
     service: name=postgresql state=started enabled=yes
   - name: Create shared PostgreSQL admin user.
-    sudo: yes
     command: /vagrant/scripts/dspace-db-vagrant.sh
   - name: Create DSpace Database
-    sudo: yes
     command: /vagrant/scripts/dspace-db.sh
   - name: setup netrc stuff for atmire checkout and kludge around bad atmire perms
-    sudo: yes
     command: /vagrant/scripts/shareok-3x.sh
 # Interaction with GitHub needs to be done as vagrant user because
 # ssh agent forwarding works if we do it that way    
   - name: git checkout
+    sudo_user: vagrant
     command: /vagrant/scripts/dspace-github.sh
 #   - name: install mirage2 dspace theme
 #     command: /vagrant/scripts/dspace-mirage2.sh
   - name: Ensure DSpace dependency packages are installed.
-    sudo: yes
     yum: name={{ item }} state=latest
     with_items:
     - java-1.8.0-openjdk
@@ -86,12 +79,23 @@
     - tomcat
     - tomcat-webapps
     - tomcat-admin-webapps
-  - name: Ensure Tomcat is (re)started.
-    sudo: yes
-    service: name=tomcat state=restarted enabled=yes
-  - name: install dspace
-    sudo: yes
-    command: /vagrant/scripts/dspace.sh
-  - name: db cleanup
-    sudo: yes
-    command: /vagrant/scripts/shareok-3x-db.sh
+  - name: Ensure Tomcat is started.
+    service: name=tomcat state=started enabled=yes
+  - name: Make the dspace web app location
+    file: path="{{ dspace_run }}" state=directory mode=0755 owner=tomcat group=tomcat
+  - name: Point tomcat at the dspace web app location
+    command: 'cp -r /vagrant/etc/Catalina/localhost/ /usr/share/tomcat/conf/Catalina/localhost/'
+#  - name: Build the dspace install as the vagrant user
+#    sudo_user: vagrant
+#    command: /vagrant/bin/build.sh chdir="{{ dspace_src }}"
+#    register: dspace_build_result
+#    ignore_errors: True
+#  - name: Fail the play if build exits with a code greater than 1 (Warning)
+#    fail: msg="Failed to build DSpace."
+#    when: "dspace_build_result.rc > 1"
+#  - name: Ensure the webapp belongs to tomcat
+#    file: path="{{ dspace_run }}" state=directory mode=0755 owner=tomcat group=tomcat recurse=yes
+#  - name: Restart Tomcat.
+#    service: name=tomcat state=restarted enabled=yes
+#  - name: db cleanup
+#    command: /vagrant/scripts/shareok-3x-db.sh

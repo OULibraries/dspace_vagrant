@@ -2,7 +2,7 @@
   - name: get DSpace Vagrant resources
     git: repo=https://github.com/OULibraries/dspace_vagrant.git
       dest=/vagrant/
-      branch=atmire-3x
+      version=atmire-3x
       bare=yes
   - name: Ensure scripts are executable.
     file: path=/vagrant/scripts state=directory mode=0775 recurse=yes

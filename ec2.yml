@@ -2,13 +2,13 @@
   - name: Launch instance
     ec2:
       key_name: jsherman-2015-03-02
-      instance_type: t2.micro
+      instance_type: t2.medium
       image: ami-8f0f4dea
       wait: yes
-      group: ['Inbound ssh lib-amz-broker', 'SSH + IMCP open to the world']
+      group: ['Inbound ssh lib-amz-broker', 'SSH + IMCP open to the world', 'handle-service']
       instance_tags:
-        Name: lib-ansible-test
-        Unit: Library Technology Platforms
+        Name: lib-okshare-test
+        Unit: Repository Services
         Workload: Unprovisioned
         App: ShareOK
       exact_count: 1

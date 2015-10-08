@@ -9,6 +9,7 @@
   tasks:
   #- include: fetch.yml
   - include: ec2.yml
+#  - include: push.yml
 - hosts: tag_Workload_Unprovisioned
   vars:
     dspace_git: 'https://atmire.com/git/clients/oklahoma'
@@ -38,6 +39,7 @@
 #    with_items:
 #    - postgresql94
 #    - postgresql94-jdbc
+  - include: visudo.yml
   - include: shareok.yml
     instance_tags:
       Name: lib-shareok-dev

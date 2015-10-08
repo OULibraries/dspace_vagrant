@@ -1,24 +1,13 @@
 ---
-- hosts: localhost
-  vars:
-    sshcfg: '/etc/ansible/ssh.cfg'
-    server: 'lib.s2.shareok.prod'
-    src: '/srv/migrate/'
-    dest: 'downloads/'
-  tasks:
-  - name: Ensure downloads folder exists
-    file: "path=downloads state=directory"
-  - name: Sync necessary files from production.
-    command: rsync -e 'ssh -F {{ sshcfg }}' -rltozD --min-size=1 {{ server }}:{{ src }} {{ dest }}
-- hosts: all
-  tasks:
-  - name: Ensure symlink to shareok-specific config script exists.
-    file: src=/vagrant/etc/shareok.conf.sh dest=/vagrant/etc/conf.sh state=link force=yes
-  - name: Ensure symlink to shareok-specific Catalina exists.
-    file: src=/vagrant/etc/Catalina/shareok dest=/vagrant/etc/Catalina/localhost state=link force=yes
   - name: Ensure scripts are executable.
     sudo: yes
     file: path=/vagrant/scripts state=directory mode=0775 recurse=yes
+  - name: Ensure symlink to shareok-specific config script exists.
+    sudo: yes
+    file: src=/vagrant/etc/shareok.conf.sh dest=/vagrant/etc/conf.sh state=link force=yes
+  - name: Ensure symlink to shareok-specific Catalina exists.
+    sudo: yes
+    file: src=/vagrant/etc/Catalina/shareok dest=/vagrant/etc/Catalina/localhost state=link force=yes
   - name: Ensure base packages are installed.
     sudo: yes
     yum: name={{ item }} state=latest

@@ -1,0 +1,5 @@
+---
+  - name: Ensure downloads folder exists
+    file: "path=downloads state=directory"
+  - name: Sync necessary files from production.
+    command: rsync -e 'ssh -F {{ sshcfg }}' -rltozD --min-size=1 {{ server }}:{{ src }} {{ dest }}

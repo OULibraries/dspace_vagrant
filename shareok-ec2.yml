@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  vars:
+    sshcfg: '/etc/ansible/ssh.cfg'
+    server: 'lib.s2.shareok.prod'
+    src: '/srv/migrate/'
+    dest: 'downloads/'
+  tasks:
+  - include: fetch.yml
+  - include: ec2.yml
+- hosts: tag_Workload_Unprovisioned
+  tasks:
+  - include: shareok.yml

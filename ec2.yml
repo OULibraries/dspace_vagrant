@@ -1,0 +1,27 @@
+---
+  - name: Launch instance
+    ec2:
+      key_name: jsherman-2015-03-02
+      instance_type: t2.micro
+      image: ami-8f0f4dea
+      wait: yes
+      group: ['Inbound ssh lib-amz-broker', 'SSH + IMCP open to the world']
+      instance_tags:
+        Name: lib-ansible-test
+        Unit: Library Technology Platforms
+        Workload: Unprovisioned
+        App: ShareOK
+      exact_count: 1
+      count_tag:
+        App: ShareOK
+        Workload: Unprovisioned
+      vpc_subnet_id: subnet-e09a5b97
+      assign_public_ip: yes
+      region: us-east-1
+    register: ec2
+  - name: Add new instance to host group
+    add_host: hostname={{ item.private_ip }} groupname=unprovisioned
+    with_items: ec2.instances
+  - name: Wait for SSH to come up
+    wait_for: host={{ item.private_ip }} port=22 delay=60 timeout=320 state=started
+    with_items: ec2.instances

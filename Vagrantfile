@@ -32,6 +32,6 @@ Vagrant.configure(2) do |config|
   home_dir = "/home/vagrant"
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "shareok.yml"
+    ansible.playbook = "shareok-vagrant.yml"
   end
 end

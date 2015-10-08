@@ -6,22 +6,16 @@
     src: '/srv/migrate/'
     dest: 'downloads/'
   tasks:
-  - name: Ensure symlink to shareok-specific config script exists.
-    file: src=../etc/shareok.conf.sh dest=etc/conf.sh state=link force=yes
-  - name: Ensure symlink to shareok-specific Catalina exists.
-    file: src=../etc/Catalina/shareok dest=etc/Catalina/localhost state=link force=yes
   - name: Ensure downloads folder exists
     file: "path=downloads state=directory"
   - name: Sync necessary files from production.
     command: rsync -e 'ssh -F {{ sshcfg }}' -rltozD --min-size=1 {{ server }}:{{ src }} {{ dest }}
 - hosts: all
   tasks:
-#  - name: Ensure NTP (for time synchronization) is installed.
-#    yum: name=ntp state=installed
-#  - name: Ensure NTP is running.
-#    service: name=ntpd state=started enabled=yes
-#
-
+  - name: Ensure symlink to shareok-specific config script exists.
+    file: src=/vagrant/etc/shareok.conf.sh dest=/vagrant/etc/conf.sh state=link force=yes
+  - name: Ensure symlink to shareok-specific Catalina exists.
+    file: src=/vagrant/etc/Catalina/shareok dest=/vagrant/etc/Catalina/localhost state=link force=yes
   - name: Ensure scripts are executable.
     sudo: yes
     file: path=/vagrant/scripts state=directory mode=0775 recurse=yes
@@ -103,9 +97,9 @@
     - tomcat
     - tomcat-webapps
     - tomcat-admin-webapps
-  - name: Ensure Tomcat is running.
+  - name: Ensure Tomcat is (re)started.
     sudo: yes
-    service: name=tomcat state=started enabled=yes
+    service: name=tomcat state=restarted enabled=yes
   - name: install dspace
     sudo: yes
     command: /vagrant/scripts/dspace.sh

@@ -1,0 +1,33 @@
+# Deliver cron email to system administrator
+MAILTO="lmc@ou.edu"
+
+
+# DSpace Installation
+DSPACE="/srv/shareok/dspace"
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+JAVA_OPTS="-Xmx512M -Xms512M -Dfile.encoding=UTF-8"
+
+
+# m h  dom mon dow   command
+@reboot $DSPACE/bin/start-handle-server
+
+
+# Run the DSpace media filter scripts and save all output to a log file
+# (Creates image thumbnails, indexes full text, and
+# performs any automated format conversions)
+0 2 * * * $DSPACE/bin/dspace filter-media
+
+
+# Update collection stengths
+0 3 * * 0 $DSPACE/bin/dspace itemcounter
+
+# Update simple, advanced search and browse indexes
+0 5 * * 0 $DSPACE/bin/dspace index-update
+
+# Optimize discovery index
+30 5 * * 0 $DSPACE/bin/dspace update-discovery-index -o
+
+# Run OAI incremental import with optimization
+0 6 * * * $DSPACE/bin/dspace oai import -o
+
+

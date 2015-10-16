@@ -9,6 +9,12 @@
   tasks:
   #- include: fetch.yml
   - include: ec2.yml
+    vars:
+      ec2_tag_Name: "lib-amz-shareok-test"
+      ec2_tag_App: "ShareOK"
+      ec2_tag_Unit: "Repository Services"
+      ec2_tag_Workload: "Unprovisioned"
+      ec2_volume_size: 64
 #  - include: push.yml
 - hosts: tag_Workload_Unprovisioned
   vars:
@@ -40,8 +46,7 @@
 #    - postgresql94
 #    - postgresql94-jdbc
   - include: visudo.yml
+  - include: ec2-persistent-hostname.yml
+    vars:
+      ec2_tag_Name: "{{ ec2_tag_Name }}"
   - include: shareok.yml
-    instance_tags:
-      Name: lib-shareok-dev
-      Unit: Library Technology Platforms
-      Workload: Development

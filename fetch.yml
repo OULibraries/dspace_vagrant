@@ -1,5 +1,7 @@
 ---
-  - name: Ensure downloads folder exists
-    file: "path=downloads state=directory"
+#  - name: Ensure downloads folder exists
+#    file: "path=downloads state=directory"
   - name: Sync necessary files from production.
-    command: rsync -e 'ssh -F {{ sshcfg }}' -rltozD --min-size=1 {{ server }}:{{ src }} {{ dest }}
+    sudo: no
+    #command: rsync -e 'ssh -F {{ sshcfg }}' -rltozD --min-size=1 {{ server }}:{{ src }} {{ dest }}
+    command: rsync -e 'ssh -o StrictHostKeyChecking=no -o ForwardAgent=yes'  -az --ignore-times --omit-dir-times --no-perms --min-size=1 {{ server }}:{{ src }} {{ dest }}

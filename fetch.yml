@@ -1,7 +1,11 @@
 ---
-#  - name: Ensure downloads folder exists
-#    file: "path=downloads state=directory"
-  - name: Sync necessary files from production.
+  - name: Sync {{ src }} from production.
     sudo: no
-    #command: rsync -e 'ssh -F {{ sshcfg }}' -rltozD --min-size=1 {{ server }}:{{ src }} {{ dest }}
-    command: rsync -e 'ssh -o StrictHostKeyChecking=no -o ForwardAgent=yes'  -az --ignore-times --omit-dir-times --no-perms --min-size=1 {{ server }}:{{ src }} {{ dest }}
+    command: rsync -e 'ssh -o StrictHostKeyChecking=no -o ForwardAgent=yes'  -az --ignore-times --omit-dir-times --no-perms {{ server }}:{{ src }} {{ dest }}
+  - name: Chown {{ dest }} to vagrant:wheel
+    shell: chown -R vagrant:wheel {{ dest }}
+  - name: Chmod dirs in {{ dest }} to 770
+    shell: chmod 750 $(find {{ dest }} -type d)
+  - name: Chmod files in {{ src }} to 660
+    shell: chmod 660 $(find {{ dest }} -type f)
+    ignore_errors: True

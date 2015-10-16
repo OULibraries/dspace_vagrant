@@ -9,6 +9,16 @@
   - name: Add github ssh fingerprints to vagrant ssh known_hosts.
     shell: >
       ssh-keyscan github.com | tee -a /home/vagrant/.ssh/known_hosts
+  - name: Ensure correct .ssh/config exists for libacct
+    file: path=/home/libacct/.ssh/config state=touch mode=0700 owner=libacct group=libacct
+  - name: Ensure correct .ssh/config settings for libacct
+    sudo_user: libacct
+    lineinfile:
+      dest: /home/libacct/.ssh/config
+      line: "{{ item.line }}"
+    with_items:
+      - { line: 'host *' }
+      - { line: 'ForwardAgent yes' }
   - name: Ensure base packages are installed.
     yum: name={{ item }} state=latest
     with_items:

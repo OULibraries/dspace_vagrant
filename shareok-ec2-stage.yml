@@ -1,14 +1,8 @@
 ---
 - hosts: localhost
   tasks:
-#  - include: ec2.yml
-    vars:
-      ec2_tag_Name: "lib-amz-shareok-5x-test"
-      ec2_tag_App: "ShareOK"
-      ec2_tag_Unit: "Repository Services"
-      ec2_tag_Workload: "Unprovisioned"
-      ec2_instance_type: "t2.large"
-      ec2_volume_size: 64
+  - include: ec2.yml
+  - include_vars: shareok-ec2-vars.yml
 - hosts: unprovisioned
   sudo: yes
   tasks:

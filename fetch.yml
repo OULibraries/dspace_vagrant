@@ -5,7 +5,7 @@
   - name: Chown {{ dest }} to vagrant:wheel
     shell: chown -R vagrant:wheel {{ dest }}
   - name: Chmod dirs in {{ dest }} to 770
-    shell: chmod 750 $(find {{ dest }} -type d)
+    shell: chmod 770 $(find {{ dest }} -type d)
   - name: Chmod files in {{ src }} to 660
     shell: chmod 660 $(find {{ dest }} -type f)
     ignore_errors: True

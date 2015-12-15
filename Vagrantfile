@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
 
   config.ssh.forward_agent = true
 
-  config.vm.box = "vmware-centos71"
+  config.vm.box = "geerlingguy/centos7"
   config.vm.hostname = "dspace.vm.test"
 
 

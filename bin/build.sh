@@ -6,7 +6,8 @@
 # build dspace as an unprivleged user
 #
 cd ${DSPACE_SRC}
-$MAVEN -Dmaven.repo.local=/vagrant/m2 -Dmirage2.on=true -Denv=$MAVEN_PROFILE -Dskiptests package
+#$MAVEN  -Dmaven.repo.local=/vagrant/m2 -Dmirage2.on=true -Denv=$MAVEN_PROFILE -Dskiptests package
+$MAVEN  -Dmirage2.on=true -Denv=$MAVEN_PROFILE -Dskiptests package
 OUT=$?
 if [ $OUT -eq 0 ];then
    echo "Maven Update successful"

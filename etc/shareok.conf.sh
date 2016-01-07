@@ -10,7 +10,7 @@ export ANT_OPTS="-Xms128m -Xmx800m"
 DSPACE_GIT="git@github.com:OULibraries/shareok_dspace"
 DSPACE_SRC=/vagrant/shareok_dspace
 DSPACE_RUN=/srv/shareok/dspace
-
+DSPACE_DATA="/mnt/shareokdata/5x-assetstore0"
 
 # DSpace Database Configuration
 DB_HOST=localhost

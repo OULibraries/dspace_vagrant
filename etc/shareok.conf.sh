@@ -16,9 +16,9 @@ DSPACE_RUN=/srv/shareok/dspace
 DB_HOST=localhost
 DB_ADMIN=libacct
 DB_ADMIN_PASS=libacct
+
 # Currently using the same name for user and db 
 DB_NAME=dspace
 DB_PASS=dspace
-
 
 

@@ -24,6 +24,11 @@ Vagrant.configure(2) do |config|
     v.vmx["memsize"] = "4096"
   end
 
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 4096
+  end
+
   home_dir = "/home/vagrant"
 
   config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir

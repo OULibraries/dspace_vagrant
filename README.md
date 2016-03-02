@@ -7,7 +7,7 @@ Requires:
 
 ## Configure and Install
 
-This environment can work for either OUatio or SHAREOK development. To configure for SHAREOK:
+This environment can work for either Commons or SHAREOK development. To configure for SHAREOK:
 
 * Clone the repo to an appropriate location: `git clone https://github.com/OULibraries/dspace_vagrant shareok_vagrant`
 * in `.../etc` do `ln -s ./shareok.conf.sh ./conf.sh`
@@ -22,7 +22,7 @@ After sucessfully building a VM, you will find:
 * DSpace will be installed and running from a project folder under /srv
 * the DSpace source code will be located in the /vagrant folder (shared from the host computer)
 
-To configure for OUatio, substitute the OUatio configuration files. 
+To configure for Commons, substitute the Commons configuration files. 
 
 
 

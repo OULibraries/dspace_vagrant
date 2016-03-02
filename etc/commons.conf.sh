@@ -7,9 +7,9 @@ export ANT_OPTS="-Xms128m -Xmx800m"
 
 
 # DSpace Paths
-DSPACE_GIT="git@github.com:OULibraries/ouatio_dspace"
-DSPACE_SRC=/vagrant/ouatio_dspace
-DSPACE_RUN=/srv/ouatio/dspace
+DSPACE_GIT="git@github.com:OULibraries/commons_dspace"
+DSPACE_SRC=/vagrant/commons_dspace
+DSPACE_RUN=/srv/commons/dspace
 
 
 # DSpace Database Configuration

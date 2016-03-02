@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
 <Context
-    docBase="/srv/ouatio/dspace/webapps/solr"
+    docBase="/srv/commons/dspace/webapps/solr"
     reloadable="true"
     cachingAllowed="false"/>

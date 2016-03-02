@@ -1,5 +1,6 @@
 <?xml version='1.0'?>
 <Context
-    docBase="/srv/ouatio/dspace/webapps/oai"
+    path="/"
+    docBase="/srv/commons/dspace/webapps/xmlui"
     reloadable="true"
     cachingAllowed="false"/>
